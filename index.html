@@ -87,12 +87,63 @@
                     </div>
                     <button class="help-btn restart-btn" onclick="restartPuzzle()">🔄 重新拼图</button>
                 </div>
+
+                <!-- 问卷对话框 -->
+                <div class="questionnaire-modal" id="questionnaireModal">
+                    <div class="questionnaire-container">
+                        <div class="question-content" id="questionContent">
+                            <!-- 动态内容将被插入这里 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 拒绝结局 -->
+                <div class="rejection-modal" id="rejectionModal">
+                    <div class="rejection-container">
+                        <h2>你不要我了</h2>
+                        <p style="font-size: 1.2rem; margin: 20px 0; line-height: 1.8;">
+                            我会一直等你，即使你现在不要我...
+                        </p>
+                        <div style="margin-top: 30px; opacity: 0.7;">
+                            <p>💔</p>
+                        </div>
+                        <button class="help-btn" onclick="restartQuestionnaire()">返回重新选择</button>
+                    </div>
+                </div>
+
+                <!-- 我想对你说的话 -->
+                <div class="message-modal" id="messageModal">
+                    <div class="message-container">
+                        <h2>💕 我想对你说的话 💕</h2>
+                        <div class="love-message">
+                            <p>老婆，最近我们都很忙，还有发生了很多争吵，但是到最后我们都是往好结局走，如果我以前做过很多让你不开心的事，我很抱歉，有时候我真的没有想太多。头脑放空的去顺其自然的去做一些事情，都不会去顾虑太多有些事情我真的不是故意去做，不过我会改变变得做每件事情都去想了才说想了才做，我爱你，也没有不要你，我们最近都很忙每次，相处的时间都很少。很少比起以前更少，以前得空没有工作学校也没有很多东西做，很得空，现在不行了，希望我们可以每天一有时间就在一起，每天开开心心的幸福下去，我希望我们可以走到最后，我还有很多事情想和你一起做，一起去玩，一起生活，我爱你，老婆</p>
+                        </div>
+                        <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <button class="help-btn" onclick="closeMessageAndContinue()">继续答题</button>
+                            <button class="help-btn" id="goSurpriseBtn" onclick="goToSurprise()" disabled>✨ 转到惊喜页面 ✨</button>
+                        </div>
+                        <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.6; text-align: center;" id="timeWarning"></p>
+                    </div>
+                </div>
+
+                <!-- 打屁屁内容 -->
+                <div class="spanking-modal" id="spankinModal">
+                    <div class="spanking-container">
+                        <h2>💋 打屁屁时间 💋</h2>
+                        <div class="spanking-content">
+                            <p style="font-size: 1.5rem; margin: 20px 0;">👋</p>
+                            <p>呵呵，坏老婆，被抓到了～</p>
+                            <p style="margin-top: 20px; font-size: 0.95rem; opacity: 0.8;">记得我爱你呦 💕</p>
+                        </div>
+                        <button class="help-btn" onclick="continueAfterSpanking()">继续</button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- 惊喜部分 -->
         <div class="surprise-section" id="surpriseSection">
-            <h1 class="surprise-title">🎉 亲爱的 🎉</h1>
+            <h1 class="surprise-title">🎉 亲爱的老婆 🎉</h1>
             
             <div class="big-heart">💖</div>
             
@@ -100,8 +151,7 @@
                 <p>在这个特别的时刻，</p>
                 <p>我想对你说...</p>
                 <p>💕</p>
-                <p>遇见你是我这辈子最美的意外，</p>
-                <p>你的笑容是我每天最期待的风景，</p>
+                <p>遇见你是我这辈子最幸运的意外，</p>
                 <p>谢谢你一直陪在我身边，</p>
                 <p>让我的生活充满了爱与幸福。</p>
                 <p>💕</p>

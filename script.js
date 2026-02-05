@@ -873,11 +873,6 @@ function checkCompletion() {
         saveCompleted();
         saveProgress();
         
-        // 显示完成界面
-        document.getElementById('puzzleComplete').style.display = 'block';
-        document.getElementById('piecesPool').style.display = 'none';
-        document.getElementById('shuffleBtn').style.display = 'none';
-        
         // 禁用拼图操作
         disablePuzzle();
         
@@ -892,6 +887,11 @@ function checkCompletion() {
                 );
             }, i * 400);
         }
+        
+        // 延迟一下再显示问卷，让用户先看到烟花和庆祝
+        setTimeout(() => {
+            showQuestion1();
+        }, 1000);
     } else {
         // 如果撤销后不再完成，隐藏完成提示
         document.getElementById('puzzleComplete').style.display = 'none';
@@ -914,6 +914,8 @@ function shufflePieces() {
 }
 
 // ==================== 倒计时 ====================
+let timeReached = false; // 追踪时间是否已到达
+
 function updateCountdown() {
     // 目标时间: 2026年2月5日 22:00:00 马来西亚时间 (UTC+8)
     const targetUTC = new Date('2026-02-05T14:00:00Z').getTime(); // 22:00 MYT = 14:00 UTC
@@ -921,7 +923,13 @@ function updateCountdown() {
     const diff = targetUTC - nowUTC;
 
     if (diff <= 0) {
-        showSurprise();
+        if (!timeReached) {
+            timeReached = true;
+            // 如果消息框已经打开，更新按钮状态
+            if (document.getElementById('messageModal').classList.contains('show')) {
+                updateGoSurpriseButton();
+            }
+        }
         return;
     }
 
@@ -949,3 +957,211 @@ createFloatingHearts();
 initPuzzle();
 updateCountdown();
 setInterval(updateCountdown, 1000);
+
+// ==================== 问卷调查系统 ====================
+
+// 第一个问题：想不想看看我想对你说的话
+function showQuestion1() {
+    const modal = document.getElementById('questionnaireModal');
+    const content = document.getElementById('questionContent');
+    
+    content.innerHTML = `
+        <h2>💕 一个问题 💕</h2>
+        <p>想不想看看我想对你说的话？</p>
+        <div class="question-buttons">
+            <button class="question-btn yes" onclick="answerQuestion1('yes')">是 💕</button>
+            <button class="question-btn no" onclick="answerQuestion1('no')">否 💔</button>
+        </div>
+    `;
+    
+    modal.classList.add('show');
+}
+
+// 处理第一个问题的答案
+function answerQuestion1(answer) {
+    if (answer === 'yes') {
+        // 进入第二个问题
+        document.getElementById('questionnaireModal').classList.remove('show');
+        setTimeout(() => {
+            showQuestion2();
+        }, 300);
+    } else {
+        // 显示拒绝界面
+        document.getElementById('questionnaireModal').classList.remove('show');
+        setTimeout(() => {
+            document.getElementById('rejectionModal').classList.add('show');
+        }, 300);
+    }
+}
+
+// 关闭消息后继续答题
+function closeMessageAndContinue() {
+    document.getElementById('messageModal').classList.remove('show');
+    setTimeout(() => {
+        showQuestion2();
+    }, 300);
+}
+
+// 第二个问题：你知道我们是什么时候在一起的吗
+function showQuestion2() {
+    const modal = document.getElementById('questionnaireModal');
+    const content = document.getElementById('questionContent');
+    
+    content.innerHTML = `
+        <h2>💕 第二个问题 💕</h2>
+        <p>你知道我们是什么时候在一起的吗？</p>
+        <p style="font-size: 0.9rem; opacity: 0.7;">（请输入日期，格式：YYYY年M月D日）</p>
+        <input type="text" class="answer-input" id="answerInput2" placeholder="例如: 2023年4月9日" />
+        <button class="submit-answer-btn" onclick="checkQuestion2Answer()">提交答案</button>
+    `;
+    
+    modal.classList.add('show');
+    
+    // 让输入框自动获得焦点
+    setTimeout(() => {
+        document.getElementById('answerInput2').focus();
+    }, 100);
+}
+
+// 检查第二个问题的答案 - 答对才能看消息
+function checkQuestion2Answer() {
+    const input = document.getElementById('answerInput2').value.trim();
+    const correctAnswers = ['2023年4月9日', '2023年4月9', '4月9日', '2023/4/9', '2023-4-9'];
+    
+    // 规范化输入
+    const normalized = input.toLowerCase().replace(/\s+/g, '');
+    const isCorrect = correctAnswers.some(ans => ans.toLowerCase().replace(/\s+/g, '') === normalized);
+    
+    if (input === '') {
+        alert('请输入答案呦 💕');
+        return;
+    }
+    
+    if (isCorrect) {
+        // 答对了！显示"我想对你说的话"消息框
+        document.getElementById('questionnaireModal').classList.remove('show');
+        setTimeout(() => {
+            showMessageAfterCorrectAnswer();
+        }, 300);
+    } else {
+        alert('不对哦，再想想 💭');
+    }
+}
+
+// 显示"我想对你说的话"消息框，并检查时间状态
+function showMessageAfterCorrectAnswer() {
+    document.getElementById('messageModal').classList.add('show');
+    updateGoSurpriseButton();
+}
+
+// 更新"转到惊喜页面"按钮的状态
+function updateGoSurpriseButton() {
+    const btn = document.getElementById('goSurpriseBtn');
+    const warning = document.getElementById('timeWarning');
+    
+    if (timeReached) {
+        btn.disabled = false;
+        warning.textContent = '✅ 时间已到，你可以继续了！';
+    } else {
+        btn.disabled = true;
+        warning.textContent = '⏳ 请等待时间到达...';
+    }
+}
+
+// 转到惊喜页面 - 需要时间到 + 拼图完成
+function goToSurprise() {
+    if (!timeReached) {
+        alert('时间还没有到呢，再等等吧 💕');
+        return;
+    }
+    
+    if (!puzzleCompleted) {
+        alert('拼图还没有完成呢 🧩');
+        return;
+    }
+    
+    // 两个条件都满足了
+    document.getElementById('messageModal').classList.remove('show');
+    setTimeout(() => {
+        // 隐藏倒计时区域，跳转到加载页面
+        document.getElementById('countdownSection').style.display = 'none';
+        window.location.href = 'loading.html';
+    }, 300);
+}
+
+// 第三个问题：你想打屁屁吗
+function showQuestion3() {
+    const modal = document.getElementById('questionnaireModal');
+    const content = document.getElementById('questionContent');
+    
+    content.innerHTML = `
+        <h2>💕 第三个问题 💕</h2>
+        <p>你想打屁屁吗？</p>
+        <div class="question-buttons">
+            <button class="question-btn yes" onclick="answerQuestion3('yes')">想 💋</button>
+            <button class="question-btn no" onclick="answerQuestion3('no')">不想 😊</button>
+        </div>
+    `;
+    
+    modal.classList.add('show');
+}
+
+// 处理第三个问题的答案
+function answerQuestion3(answer) {
+    document.getElementById('questionnaireModal').classList.remove('show');
+    
+    if (answer === 'yes') {
+        // 显示打屁屁内容
+        setTimeout(() => {
+            document.getElementById('spankinModal').classList.add('show');
+        }, 300);
+    } else {
+        // 显示拒绝界面（和第一个问题不想的结局一样）
+        setTimeout(() => {
+            document.getElementById('rejectionModal').classList.add('show');
+        }, 300);
+    }
+}
+
+// 打屁屁后继续
+function continueAfterSpanking() {
+    document.getElementById('spankinModal').classList.remove('show');
+    setTimeout(() => {
+        showFinalMessage();
+    }, 300);
+}
+
+// 重新开始问卷
+function restartQuestionnaire() {
+    document.getElementById('rejectionModal').classList.remove('show');
+    setTimeout(() => {
+        showQuestion1();
+    }, 300);
+}
+
+// 最终消息（所有问题都答完了）
+function showFinalMessage() {
+    const modal = document.getElementById('messageModal');
+    const container = modal.querySelector('.message-container');
+    
+    container.innerHTML = `
+        <h2>💕 永远爱你 💕</h2>
+        <div class="love-message">
+            <p>谢谢你完成了拼图，也谢谢你回答了我的问题。无论怎样，我都深深地爱着你。希望我们能一起走到最后，一起经历更多美好的时光。</p>
+            <p style="margin-top: 20px;">我爱你，老婆 💕</p>
+        </div>
+        <button class="help-btn" onclick="finishQuestionnaire()">完成</button>
+    `;
+    
+    modal.classList.add('show');
+}
+
+// 完成问卷，跳转到惊喜页面
+function finishQuestionnaire() {
+    document.getElementById('messageModal').classList.remove('show');
+    setTimeout(() => {
+        // 隐藏拼图区域
+        document.getElementById('countdownSection').style.display = 'none';
+        window.location.href = 'loading.html';
+    }, 300);
+}

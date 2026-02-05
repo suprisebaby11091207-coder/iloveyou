@@ -752,3 +752,255 @@ body {
         background-size: 138px 138px;
     }
 }
+
+/* ==================== 问卷样式 ==================== */
+.questionnaire-modal, .rejection-modal, .message-modal, .spanking-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.questionnaire-modal.show, .rejection-modal.show, .message-modal.show, .spanking-modal.show {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 问卷容器 */
+.questionnaire-container {
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.15), rgba(255, 182, 193, 0.15));
+    border: 2px solid #ff6ec7;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: 0 10px 50px rgba(255, 110, 199, 0.3);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.question-content h2 {
+    color: #ff6ec7;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.question-content p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* 问题按钮 */
+.question-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.question-btn {
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    border: 2px solid #ff6ec7;
+    background: rgba(255, 110, 199, 0.2);
+    color: #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.question-btn:hover {
+    background: #ff6ec7;
+    transform: scale(1.1);
+}
+
+.question-btn.yes {
+    background: #ff6ec7;
+}
+
+.question-btn.no {
+    background: rgba(100, 100, 100, 0.5);
+    border-color: #999;
+}
+
+.question-btn.no:hover {
+    background: rgba(150, 100, 100, 0.8);
+}
+
+/* 答题输入框 */
+.answer-input {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #ff6ec7;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 10px;
+    margin: 20px auto;
+    display: block;
+    width: 80%;
+    transition: all 0.3s;
+}
+
+.answer-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.answer-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffb6c1;
+}
+
+.submit-answer-btn {
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    border: 2px solid #ff6ec7;
+    background: #ff6ec7;
+    color: #fff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.submit-answer-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(255, 110, 199, 0.5);
+}
+
+/* Disabled 按钮样式 */
+.help-btn:disabled, 
+.question-btn:disabled,
+.submit-answer-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(150, 150, 150, 0.5);
+    border-color: #999;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.help-btn:disabled:hover,
+.question-btn:disabled:hover,
+.submit-answer-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* 拒绝模态框 */
+.rejection-container {
+    background: linear-gradient(135deg, rgba(150, 100, 100, 0.15), rgba(200, 100, 100, 0.15));
+    border: 2px solid #cc8899;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: 0 10px 50px rgba(200, 100, 100, 0.3);
+}
+
+.rejection-container h2 {
+    color: #ff6b9d;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.rejection-container p {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+/* 消息模态框 */
+.message-container {
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.15), rgba(255, 182, 193, 0.15));
+    border: 2px solid #ff6ec7;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: 0 10px 50px rgba(255, 110, 199, 0.3);
+}
+
+.message-container h2 {
+    color: #ff6ec7;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.love-message {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #ff6ec7;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.love-message p {
+    color: #fff;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: justify;
+    word-wrap: break-word;
+}
+
+/* 打屁屁模态框 */
+.spanking-container {
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.15), rgba(255, 182, 193, 0.15));
+    border: 2px solid #ff6ec7;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: slideUp 0.4s ease-out;
+    box-shadow: 0 10px 50px rgba(255, 110, 199, 0.3);
+}
+
+.spanking-container h2 {
+    color: #ff6ec7;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.spanking-content {
+    margin-bottom: 30px;
+}
+
+.spanking-content p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
