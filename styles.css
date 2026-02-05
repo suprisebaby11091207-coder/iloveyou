@@ -1,0 +1,754 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: 'Noto Sans SC', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 星星背景 */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+}
+
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+    animation: shoot 3s linear infinite;
+    opacity: 0;
+}
+
+@keyframes shoot {
+    0% { transform: translateX(0) translateY(0); opacity: 1; }
+    70% { opacity: 1; }
+    100% { transform: translateX(-500px) translateY(500px); opacity: 0; }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 漂浮的爱心 */
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 萤火虫效果 */
+.firefly {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(255, 220, 100, 1) 0%, rgba(255, 220, 100, 0) 70%);
+    border-radius: 50%;
+    animation: fireflyMove 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes fireflyMove {
+    0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+    25% { transform: translate(100px, -50px) scale(1.2); opacity: 1; }
+    50% { transform: translate(50px, 100px) scale(0.8); opacity: 0.6; }
+    75% { transform: translate(-50px, 50px) scale(1.1); opacity: 0.9; }
+}
+
+/* 主容器 */
+.container {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+/* 倒计时部分 */
+.countdown-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #ff6b9d;
+    text-shadow: 0 0 30px rgba(255, 107, 157, 0.5);
+    margin-bottom: 20px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px rgba(255, 107, 157, 0.5); }
+    to { text-shadow: 0 0 40px rgba(255, 107, 157, 0.8), 0 0 60px rgba(255, 107, 157, 0.4); }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #e8b4c8;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.countdown-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.countdown-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 107, 157, 0.3);
+    border-radius: 20px;
+    padding: 25px 30px;
+    min-width: 100px;
+    box-shadow: 0 8px 32px rgba(255, 107, 157, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.countdown-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(255, 107, 157, 0.3);
+}
+
+.countdown-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    color: #e8b4c8;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.message {
+    font-size: 1.1rem;
+    color: #fff;
+    max-width: 500px;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.heart-divider {
+    font-size: 2rem;
+    margin: 20px 0;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* 拼图游戏部分 */
+.puzzle-section {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.puzzle-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #ff9ecf;
+    margin-bottom: 10px;
+}
+
+.puzzle-subtitle {
+    color: #e8b4c8;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.puzzle-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.puzzle-board-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.puzzle-label {
+    color: #ff9ecf;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    font-family: 'Dancing Script', cursive;
+}
+
+.puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(3, 80px);
+    grid-template-rows: repeat(3, 80px);
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 107, 157, 0.3);
+    box-shadow: 0 10px 40px rgba(255, 107, 157, 0.2);
+}
+
+.puzzle-cell {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border: 2px dashed rgba(255, 107, 157, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.puzzle-cell.occupied {
+    border: 2px solid rgba(255, 107, 157, 0.5);
+    background: transparent;
+}
+
+.puzzle-cell.highlight {
+    border: 2px solid #ff6b9d;
+    background: rgba(255, 107, 157, 0.2);
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
+}
+
+.puzzle-cell.correct {
+    border: 2px solid #4ade80;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+}
+
+/* 拼图块池 */
+.pieces-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 107, 157, 0.2);
+    min-height: 120px;
+}
+
+.puzzle-piece {
+    width: 76px;
+    height: 76px;
+    background-size: 228px 228px;
+    border-radius: 8px;
+    cursor: grab;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.puzzle-piece:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+    z-index: 100;
+}
+
+.puzzle-piece.selected {
+    transform: scale(1.15);
+    box-shadow: 0 0 30px rgba(255, 107, 157, 0.8);
+    border: 3px solid #ff6b9d;
+}
+
+.puzzle-piece.placed {
+    cursor: default;
+}
+
+.puzzle-piece.piece-photo1 {
+    border-color: rgba(255, 150, 200, 0.6);
+}
+
+.puzzle-piece.piece-photo2 {
+    border-color: rgba(150, 200, 255, 0.6);
+}
+
+/* 完成提示 */
+.puzzle-complete {
+    display: none;
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(255, 182, 193, 0.3));
+    border: 2px solid rgba(255, 107, 157, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 20px;
+    animation: celebrateIn 0.5s ease-out;
+}
+
+@keyframes celebrateIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.puzzle-complete h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #ff6b9d;
+    margin-bottom: 10px;
+}
+
+.puzzle-complete p {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.progress-bar {
+    width: 300px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b9d, #ff9ecf);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.progress-text {
+    color: #e8b4c8;
+    font-size: 0.9rem;
+}
+
+.photo-status {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.status-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: #e8b4c8;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 107, 157, 0.3);
+    transition: all 0.3s;
+}
+
+.status-item.complete {
+    background: rgba(74, 222, 128, 0.2);
+    border-color: rgba(74, 222, 128, 0.5);
+    color: #4ade80;
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+}
+
+.status-item.complete::after {
+    content: ' ✓';
+}
+
+.status-count {
+    font-weight: bold;
+    color: #fff;
+}
+
+.restart-btn {
+    margin-top: 20px;
+    background: rgba(255, 107, 157, 0.4);
+    font-size: 1rem;
+    padding: 12px 30px;
+}
+
+.restart-btn:hover {
+    background: rgba(255, 107, 157, 0.6);
+}
+
+.puzzle-disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+/* 惊喜部分 */
+.surprise-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.surprise-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    color: #ff6b9d;
+    text-shadow: 0 0 40px rgba(255, 107, 157, 0.6);
+    margin-bottom: 30px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.love-message {
+    font-size: 1.5rem;
+    color: #fff;
+    max-width: 600px;
+    line-height: 2;
+    margin-bottom: 40px;
+}
+
+.big-heart {
+    font-size: 8rem;
+    animation: heartbeat 1.2s ease-in-out infinite;
+    margin: 30px 0;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
+    60% { transform: scale(1); }
+}
+
+.special-message {
+    background: linear-gradient(135deg, rgba(255, 107, 157, 0.2), rgba(255, 182, 193, 0.2));
+    border: 2px solid rgba(255, 107, 157, 0.4);
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 20px;
+    box-shadow: 0 10px 50px rgba(255, 107, 157, 0.3);
+}
+
+.special-message p {
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 2;
+    margin-bottom: 15px;
+}
+
+/* ==================== 响应式设计 (Mobile Support) ==================== */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.2rem;
+        padding: 0 10px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    .countdown-wrapper {
+        gap: 10px;
+    }
+
+    .countdown-box {
+        padding: 15px 10px;
+        min-width: 75px;
+        border-radius: 15px;
+    }
+
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+
+    .countdown-label {
+        font-size: 0.75rem;
+    }
+
+    .message {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+
+    /* 拼图适配 */
+    .puzzle-container {
+        gap: 20px;
+    }
+
+    .puzzle-board {
+        grid-template-columns: repeat(3, 70px);
+        grid-template-rows: repeat(3, 70px);
+        padding: 8px;
+    }
+
+    .puzzle-cell {
+        width: 70px;
+        height: 70px;
+    }
+
+    .puzzle-piece {
+        width: 66px;
+        height: 66px;
+        background-size: 198px 198px; /* 66 * 3 */
+    }
+
+    .pieces-pool {
+        padding: 10px;
+        max-width: 95vw;
+    }
+
+    .progress-bar {
+        width: 80%;
+    }
+
+    .photo-status {
+        gap: 10px;
+    }
+
+    .status-item {
+        font-size: 0.85rem;
+        padding: 8px 15px;
+    }
+
+    /* 惊喜部分适配 */
+    .surprise-title {
+        font-size: 2.5rem;
+    }
+
+    .love-message {
+        font-size: 1.1rem;
+        padding: 0 20px;
+    }
+
+    .big-heart {
+        font-size: 5rem;
+    }
+
+    .special-message {
+        padding: 25px;
+        margin: 10px;
+    }
+
+    .special-message p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .countdown-box {
+        min-width: 65px;
+        padding: 12px 5px;
+    }
+
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+
+    .puzzle-board {
+        grid-template-columns: repeat(3, 60px);
+        grid-template-rows: repeat(3, 60px);
+    }
+
+    .puzzle-cell {
+        width: 60px;
+        height: 60px;
+    }
+
+    .puzzle-piece {
+        width: 56px;
+        height: 56px;
+        background-size: 168px 168px; /* 56 * 3 */
+    }
+}
+
+.signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    color: #ff6b9d;
+    margin-top: 30px;
+}
+
+/* 完成的照片展示 */
+.completed-photos {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px 0;
+}
+
+.completed-photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    object-fit: cover;
+    border: 4px solid rgba(255, 107, 157, 0.5);
+    box-shadow: 0 10px 40px rgba(255, 107, 157, 0.3);
+    animation: photoReveal 1s ease-out;
+}
+
+@keyframes photoReveal {
+    from { transform: scale(0) rotate(-10deg); opacity: 0; }
+    to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 烟花效果 */
+.firework {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+/* 彩带 */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    animation: confettiFall 3s linear forwards;
+    z-index: 1000;
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* 说明按钮 */
+.help-btn {
+    background: rgba(255, 107, 157, 0.3);
+    border: 1px solid rgba(255, 107, 157, 0.5);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-top: 15px;
+}
+
+.help-btn:hover {
+    background: rgba(255, 107, 157, 0.5);
+    transform: scale(1.05);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .title { font-size: 2.5rem; }
+    .surprise-title { font-size: 2.8rem; }
+    .countdown-number { font-size: 2rem; }
+    .countdown-box { padding: 15px 20px; min-width: 70px; }
+    .love-message { font-size: 1.2rem; }
+    .special-message p { font-size: 1.1rem; }
+    .big-heart { font-size: 5rem; }
+    .puzzle-board {
+        grid-template-columns: repeat(3, 60px);
+        grid-template-rows: repeat(3, 60px);
+    }
+    .puzzle-cell {
+        width: 60px;
+        height: 60px;
+    }
+    .puzzle-piece {
+        width: 56px;
+        height: 56px;
+        background-size: 168px 168px;
+    }
+    .puzzle-container {
+        gap: 20px;
+    }
+    .completed-photo {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (max-width: 500px) {
+    .puzzle-board {
+        grid-template-columns: repeat(3, 50px);
+        grid-template-rows: repeat(3, 50px);
+    }
+    .puzzle-cell {
+        width: 50px;
+        height: 50px;
+    }
+    .puzzle-piece {
+        width: 46px;
+        height: 46px;
+        background-size: 138px 138px;
+    }
+}

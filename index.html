@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 给你的惊喜 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 星星背景 -->
+    <div class="stars" id="stars"></div>
+
+    <!-- 漂浮爱心 -->
+    <div class="hearts-container" id="hearts"></div>
+
+    <div class="container">
+        <!-- 倒计时部分 -->
+        <div class="countdown-section" id="countdownSection">
+            <h1 class="title">✨ 老婆有多个惊喜等着你 ✨</h1>
+            <p class="subtitle">请耐心等待这个特别的时刻...</p>
+            
+            <div class="countdown-wrapper">
+                <div class="countdown-box">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">天</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">小时</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">分钟</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">秒</div>
+                </div>
+            </div>
+
+            <div class="heart-divider">💕</div>
+
+            <p class="message">
+                老婆今天test辛苦了哦，我爱你，休息一下吧 💕<br>
+                在等的时候来玩个小游戏吧 💝
+            </p>
+
+            <!-- 拼图游戏 -->
+            <div class="puzzle-section">
+                <h2 class="puzzle-title">💕 拼出我们的回忆 💕</h2>
+                <p class="puzzle-subtitle">🎮 拖拽或点击放置 | 拖拽已放置的拼图可换位或拖回池子 | 点击已放置的拼图可撤销</p>
+                <p class="puzzle-subtitle" style="font-size: 0.9rem; opacity: 0.8;">💖 粉色边框 → 左边回忆一 | 💙 蓝色边框 → 右边回忆二</p>
+                
+                <div class="puzzle-container">
+                    <div class="puzzle-board-wrapper">
+                        <div class="puzzle-label">📷 回忆一 (粉色边框)</div>
+                        <div class="puzzle-board" id="board1" data-board="1"></div>
+                    </div>
+                    <div class="puzzle-board-wrapper">
+                        <div class="puzzle-label">📷 回忆二 (蓝色边框)</div>
+                        <div class="puzzle-board" id="board2" data-board="2"></div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text">完成度: <span id="progressText">0</span>/18</p>
+                
+                <div class="photo-status">
+                    <span class="status-item" id="status1">📷 回忆一: <span class="status-count">0/9</span></span>
+                    <span class="status-item" id="status2">📷 回忆二: <span class="status-count">0/9</span></span>
+                </div>
+
+                <h3 style="color: #ff9ecf; margin: 20px 0 10px; font-family: 'Dancing Script', cursive;">拼图块</h3>
+                <div class="pieces-pool" id="piecesPool"></div>
+
+                <button class="help-btn" id="shuffleBtn" onclick="shufflePieces()">🔀 重新打乱</button>
+
+                <div class="puzzle-complete" id="puzzleComplete">
+                    <h3>🎉 太棒了！你完成了！ 🎉</h3>
+                    <p>这些是我们美好的回忆，每一刻都值得珍藏 💕</p>
+                    <div class="completed-photos">
+                        <img src="media/puzzle/1.jpg" class="completed-photo" alt="回忆1">
+                        <img src="media/puzzle/2.jpg" class="completed-photo" alt="回忆2">
+                    </div>
+                    <button class="help-btn restart-btn" onclick="restartPuzzle()">🔄 重新拼图</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 惊喜部分 -->
+        <div class="surprise-section" id="surpriseSection">
+            <h1 class="surprise-title">🎉 亲爱的 🎉</h1>
+            
+            <div class="big-heart">💖</div>
+            
+            <div class="special-message">
+                <p>在这个特别的时刻，</p>
+                <p>我想对你说...</p>
+                <p>💕</p>
+                <p>遇见你是我这辈子最美的意外，</p>
+                <p>你的笑容是我每天最期待的风景，</p>
+                <p>谢谢你一直陪在我身边，</p>
+                <p>让我的生活充满了爱与幸福。</p>
+                <p>💕</p>
+                <p>我爱你，今天，明天，永远。</p>
+                
+                <div class="signature">
+                    永远爱你的人 ❤️
+                </div>
+            </div>
+
+            <div class="completed-photos">
+                <img src="media/puzzle/1.jpg" class="completed-photo" alt="回忆1">
+                <img src="media/puzzle/2.jpg" class="completed-photo" alt="回忆2">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
