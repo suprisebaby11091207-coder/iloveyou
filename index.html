@@ -2,169 +2,111 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💕 给你的惊喜 💕</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🍬 固特莫宁老婆 🍭</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- 星星背景 -->
-    <div class="stars" id="stars"></div>
+    <!-- 太阳 -->
+    <div class="sun" id="sun"></div>
+    
+    <!-- 云朵 -->
+    <div class="clouds-container" id="clouds"></div>
 
-    <!-- 漂浮爱心 -->
-    <div class="hearts-container" id="hearts"></div>
+    <!-- 飞鸟 -->
+    <div class="birds-container" id="birds"></div>
+
+    <!-- 树木 -->
+    <div class="trees-container" id="trees"></div>
 
     <div class="container">
-        <!-- 倒计时部分 -->
-        <div class="countdown-section" id="countdownSection">
-            <h1 class="title">✨ 老婆有多个惊喜等着你 ✨</h1>
-            <p class="subtitle">请耐心等待这个特别的时刻...</p>
-            
-            <div class="countdown-wrapper">
-                <div class="countdown-box">
-                    <div class="countdown-number" id="days">00</div>
-                    <div class="countdown-label">天</div>
-                </div>
-                <div class="countdown-box">
-                    <div class="countdown-number" id="hours">00</div>
-                    <div class="countdown-label">小时</div>
-                </div>
-                <div class="countdown-box">
-                    <div class="countdown-number" id="minutes">00</div>
-                    <div class="countdown-label">分钟</div>
-                </div>
-                <div class="countdown-box">
-                    <div class="countdown-number" id="seconds">00</div>
-                    <div class="countdown-label">秒</div>
+        <!-- 游戏主界面 -->
+        <div class="game-section" id="gameSection">
+            <h1 class="title">🍬 固特莫宁老婆 🍭</h1>
+            <p class="subtitle">老婆固特莫宁， 起来了就玩游戏吧爱你哦，赢了3关才有惊喜</p>
+
+            <!-- 教程弹窗 -->
+            <div class="game-modal" id="tutorialModal" style="display: flex;">
+                <div class="modal-content tutorial">
+                    <button class="close-btn" id="closeTutorial">×</button>
+                    <h2>🎮 游戏玩法 🎮</h2>
+                    <div class="tutorial-content">
+                        <p class="tutorial-item">🍬 <strong>交换糖果：</strong>点击或滑动相邻的糖果进行交换</p>
+                        <p class="tutorial-item">💥 <strong>消除3个：</strong>连成一线的3个或更多相同糖果就可以消除</p>
+                        <p class="tutorial-item">💣 <strong>炸弹特殊：</strong>消除4个或以上会生成炸弹，点击炸弹会爆炸4x4区域！</p>
+                        <p class="tutorial-item">⏰ <strong>时间条件：</strong>时间倒计时到了 + 完成3个关卡</p>
+                        <p class="tutorial-item">🎁 <strong>惊喜按钮：</strong>满足条件后从下面的惊喜按钮查看惊喜！</p>
+                        <p class="tutorial-item">🔊 <strong>声音提示：</strong>记得打开声音，更好的游戏体验！</p>
+                    </div>
+                    <button class="game-btn" id="startGameBtn">开始游戏 🚀</button>
                 </div>
             </div>
 
-            <div class="heart-divider">💕</div>
-
-            <p class="message">
-                老婆今天test辛苦了哦，我爱你，休息一下吧 💕<br>
-                在等的时候来玩个小游戏吧 💝
-            </p>
-
-            <!-- 拼图游戏 -->
-            <div class="puzzle-section">
-                <h2 class="puzzle-title">💕 拼出我们的回忆 💕</h2>
-                <p class="puzzle-subtitle">🎮 拖拽或点击放置 | 拖拽已放置的拼图可换位或拖回池子 | 点击已放置的拼图可撤销</p>
-                <p class="puzzle-subtitle" style="font-size: 0.9rem; opacity: 0.8;">💖 粉色边框 → 左边回忆一 | 💙 蓝色边框 → 右边回忆二</p>
-                
-                <div class="puzzle-container">
-                    <div class="puzzle-board-wrapper">
-                        <div class="puzzle-label">📷 回忆一 (粉色边框)</div>
-                        <div class="puzzle-board" id="board1" data-board="1"></div>
-                    </div>
-                    <div class="puzzle-board-wrapper">
-                        <div class="puzzle-label">📷 回忆二 (蓝色边框)</div>
-                        <div class="puzzle-board" id="board2" data-board="2"></div>
-                    </div>
-                </div>
-
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <p class="progress-text">完成度: <span id="progressText">0</span>/18</p>
-                
-                <div class="photo-status">
-                    <span class="status-item" id="status1">📷 回忆一: <span class="status-count">0/9</span></span>
-                    <span class="status-item" id="status2">📷 回忆二: <span class="status-count">0/9</span></span>
-                </div>
-
-                <h3 style="color: #ff9ecf; margin: 20px 0 10px; font-family: 'Dancing Script', cursive;">拼图块</h3>
-                <div class="pieces-pool" id="piecesPool"></div>
-
-                <button class="help-btn" id="shuffleBtn" onclick="shufflePieces()">🔀 重新打乱</button>
-
-                <div class="puzzle-complete" id="puzzleComplete">
-                    <h3>🎉 太棒了！你完成了！ 🎉</h3>
-                    <p>这些是我们美好的回忆，每一刻都值得珍藏 💕</p>
-                    <div class="completed-photos">
-                        <img src="media/puzzle/1.jpg" class="completed-photo" alt="回忆1">
-                        <img src="media/puzzle/2.jpg" class="completed-photo" alt="回忆2">
-                    </div>
-                    <button class="help-btn restart-btn" onclick="restartPuzzle()">🔄 重新拼图</button>
-                </div>
-
-                <!-- 问卷对话框 -->
-                <div class="questionnaire-modal" id="questionnaireModal">
-                    <div class="questionnaire-container">
-                        <div class="question-content" id="questionContent">
-                            <!-- 动态内容将被插入这里 -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 拒绝结局 -->
-                <div class="rejection-modal" id="rejectionModal">
-                    <div class="rejection-container">
-                        <h2>你不要我了</h2>
-                        <p style="font-size: 1.2rem; margin: 20px 0; line-height: 1.8;">
-                            我会一直等你，即使你现在不要我...
-                        </p>
-                        <div style="margin-top: 30px; opacity: 0.7;">
-                            <p>💔</p>
-                        </div>
-                        <button class="help-btn" onclick="restartQuestionnaire()">返回重新选择</button>
-                    </div>
-                </div>
-
-                <!-- 我想对你说的话 -->
-                <div class="message-modal" id="messageModal">
-                    <div class="message-container">
-                        <h2>💕 我想对你说的话 💕</h2>
-                        <div class="love-message">
-                            <p>老婆，最近我们都很忙，还有发生了很多争吵，但是到最后我们都是往好结局走，如果我以前做过很多让你不开心的事，我很抱歉，有时候我真的没有想太多。头脑放空的去顺其自然的去做一些事情，都不会去顾虑太多有些事情我真的不是故意去做，不过我会改变变得做每件事情都去想了才说想了才做，我爱你，也没有不要你，我们最近都很忙每次，相处的时间都很少。很少比起以前更少，以前得空没有工作学校也没有很多东西做，很得空，现在不行了，希望我们可以每天一有时间就在一起，每天开开心心的幸福下去，我希望我们可以走到最后，我还有很多事情想和你一起做，一起去玩，一起生活，我爱你，老婆</p>
-                        </div>
-                        <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                            <button class="help-btn" onclick="closeMessageAndContinue()">继续答题</button>
-                            <button class="help-btn" id="goSurpriseBtn" onclick="goToSurprise()" disabled>✨ 转到惊喜页面 ✨</button>
-                        </div>
-                        <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.6; text-align: center;" id="timeWarning"></p>
-                    </div>
-                </div>
-
-                <!-- 打屁屁内容 -->
-                <div class="spanking-modal" id="spankinModal">
-                    <div class="spanking-container">
-                        <h2>💋 打屁屁时间 💋</h2>
-                        <div class="spanking-content">
-                            <p style="font-size: 1.5rem; margin: 20px 0;">👋</p>
-                            <p>呵呵，坏老婆，被抓到了～</p>
-                            <p style="margin-top: 20px; font-size: 0.95rem; opacity: 0.8;">记得我爱你呦 💕</p>
-                        </div>
-                        <button class="help-btn" onclick="continueAfterSpanking()">继续</button>
-                    </div>
-                </div>
+            <!-- 倒计时显示 -->
+            <div class="countdown-box">
+                <div class="countdown-label">✨ 惊喜倒计时 ✨</div>
+                <div class="countdown-time" id="countdownTime">00:00:00</div>
+                <div class="countdown-status" id="countdownStatus">游戏进度: <span id="levelProgress">0/3</span> 关</div>
             </div>
-        </div>
 
-        <!-- 惊喜部分 -->
-        <div class="surprise-section" id="surpriseSection">
-            <h1 class="surprise-title">🎉 亲爱的老婆 🎉</h1>
-            
-            <div class="big-heart">💖</div>
-            
-            <div class="special-message">
-                <p>在这个特别的时刻，</p>
-                <p>我想对你说...</p>
-                <p>💕</p>
-                <p>遇见你是我这辈子最幸运的意外，</p>
-                <p>谢谢你一直陪在我身边，</p>
-                <p>让我的生活充满了爱与幸福。</p>
-                <p>💕</p>
-                <p>我爱你，今天，明天，永远。</p>
-                
-                <div class="signature">
-                    永远爱你的人 ❤️
+            <!-- 游戏信息栏 -->
+            <div class="game-info">
+                <div class="info-box">
+                    <div class="info-label">关卡</div>
+                    <div class="info-value" id="level">1</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">得分</div>
+                    <div class="info-value" id="score">0</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">目标</div>
+                    <div class="info-value" id="target">1000</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">移动次数</div>
+                    <div class="info-value" id="moves">30</div>
                 </div>
             </div>
 
-            <div class="completed-photos">
-                <img src="media/puzzle/1.jpg" class="completed-photo" alt="回忆1">
-                <img src="media/puzzle/2.jpg" class="completed-photo" alt="回忆2">
+            <!-- 游戏棋盘 -->
+            <div class="game-board" id="gameBoard"></div>
+
+            <!-- 控制按钮 -->
+            <div class="game-controls">
+                <button class="game-btn" id="restartBtn">🔄 重新开始</button>
+                <button class="game-btn" id="hintBtn">💡 提示</button>
+                <button class="game-btn" id="soundBtn">🔊 音效开</button>
+            </div>
+            
+            <!-- 去惊喜页面按钮 -->
+            <div class="surprise-button-container">
+                <button class="surprise-btn disabled" id="surpriseBtn" disabled>
+                    🎁 查看惊喜 🎁
+                </button>
+                <p class="surprise-hint" id="surpriseHint">完成条件后解锁</p>
+            </div>
+
+            <!-- 游戏胜利弹窗 -->
+            <div class="game-modal" id="winModal">
+                <div class="modal-content win">
+                    <button class="close-btn" id="closeWinModal">×</button>
+                    <h2 id="winTitle">🎉 恭喜过关！ 🎉</h2>
+                    <p class="modal-score">得分: <span id="winScore">0</span></p>
+                    <p class="modal-message" id="winMessage">太棒了！准备好下一关了吗？</p>
+                    <button class="game-btn" id="nextLevelBtn">下一关 →</button>
+                </div>
+            </div>
+
+            <!-- 游戏失败弹窗 -->
+            <div class="game-modal" id="loseModal">
+                <div class="modal-content lose">
+                    <h2>💔 加油！ 💔</h2>
+                    <p class="modal-score">得分: <span id="loseScore">0</span></p>
+                    <p class="modal-message">差一点就成功了，再试一次吧！</p>
+                    <button class="game-btn" id="retryBtn">重试</button>
+                </div>
             </div>
         </div>
     </div>

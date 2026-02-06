@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎉 今日惊喜 🎉</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>🍔 今日惊喜 🍔</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
@@ -15,53 +15,51 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(-45deg, #ff6b6b, #ffd93d, #ff8c42, #ff6b9d);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            font-family: 'Noto Sans SC', 'Poppins', sans-serif;
             overflow-x: hidden;
             position: relative;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(255, 107, 157, 0.15) 0%, transparent 60%),
-                        radial-gradient(circle at 70% 60%, rgba(120, 119, 255, 0.15) 0%, transparent 60%);
-            animation: bgMove 10s ease-in-out infinite;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        @keyframes bgMove {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-
-        /* 星星背景 */
-        .stars {
+        /* 浮动装饰元素 */
+        .floating-emoji {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            font-size: 3rem;
+            opacity: 0.2;
+            animation: float 8s ease-in-out infinite;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
 
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s infinite;
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+            50% {
+                transform: translateY(-60px) rotate(-10deg);
+            }
+            75% {
+                transform: translateY(-30px) rotate(5deg);
+            }
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
+        .emoji-1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .emoji-2 { top: 30%; right: 15%; animation-delay: 1s; font-size: 2.5rem; }
+        .emoji-3 { bottom: 20%; left: 8%; animation-delay: 2s; }
+        .emoji-4 { top: 60%; right: 12%; animation-delay: 1.5s; font-size: 3.5rem; }
+        .emoji-5 { bottom: 35%; left: 20%; animation-delay: 0.5s; font-size: 2rem; }
+        .emoji-6 { top: 50%; left: 5%; animation-delay: 2.5s; }
 
         /* 容器 */
         .container {
@@ -77,618 +75,757 @@
 
         /* 标题 */
         .title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4.5rem;
-            background: linear-gradient(135deg, #ff6b9d, #c471ed, #f64f59);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            animation: glow 2s ease-in-out infinite alternate;
+            font-family: 'Poppins', sans-serif;
+            font-size: 5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
+            animation: titleBounce 2s ease-in-out infinite;
             text-align: center;
-            filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.8));
+            text-shadow: 
+                4px 4px 0px rgba(0, 0, 0, 0.3),
+                8px 8px 20px rgba(0, 0, 0, 0.2);
+            letter-spacing: 3px;
         }
 
-        @keyframes glow {
-            from { 
-                filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.6));
-                transform: scale(1);
+        @keyframes titleBounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
             }
-            to { 
-                filter: drop-shadow(0 0 60px rgba(255, 107, 157, 1));
-                transform: scale(1.03);
+            50% {
+                transform: translateY(-15px) scale(1.05);
             }
         }
 
         .subtitle {
-            font-size: 1.6rem;
-            background: linear-gradient(135deg, #e8b4c8, #c8b7ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.95);
             margin-bottom: 50px;
-            letter-spacing: 4px;
+            letter-spacing: 8px;
             text-align: center;
-            animation: subtitleGlow 3s ease-in-out infinite;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            font-weight: 300;
+            animation: fadeInUp 1s ease;
         }
 
-        @keyframes subtitleGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(232, 180, 200, 0.4)); }
-            50% { filter: drop-shadow(0 0 20px rgba(232, 180, 200, 0.8)); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* 卡片 */
         .surprise-card {
-            background: linear-gradient(135deg, 
-                rgba(255, 255, 255, 0.12), 
-                rgba(255, 255, 255, 0.06));
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 107, 157, 0.4);
-            border-radius: 35px;
-            padding: 60px;
-            max-width: 650px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            border-radius: 40px;
+            padding: 60px 50px;
+            max-width: 700px;
             width: 100%;
-            box-shadow: 0 25px 80px rgba(255, 107, 157, 0.4),
-                        inset 0 0 60px rgba(255, 107, 157, 0.1);
-            animation: cardFloat 4s ease-in-out infinite;
+            box-shadow: 
+                0 30px 90px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            animation: cardEntrance 0.8s ease;
             text-align: center;
             position: relative;
             overflow: hidden;
+        }
+
+        @keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .surprise-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                transparent, 
-                rgba(255, 107, 157, 0.1), 
-                transparent);
-            animation: cardShine 6s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.1) 0%, 
+                rgba(255, 140, 0, 0.1) 100%);
+            opacity: 0.5;
+            z-index: -1;
         }
 
-        @keyframes cardShine {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(180deg); }
+        /* 发光遮罩 */
+        .reveal-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(255, 215, 0, 0.8) 30%,
+                rgba(255, 140, 0, 0.6) 60%,
+                transparent 100%);
+            z-index: 1000;
+            pointer-events: none;
+            animation: shineReveal 3s ease-in-out forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            border-radius: 40px;
         }
 
-        @keyframes cardFloat {
-            0%, 100% { 
-                transform: translateY(0) scale(1); 
-                box-shadow: 0 25px 80px rgba(255, 107, 157, 0.4),
-                           inset 0 0 60px rgba(255, 107, 157, 0.1);
+        @keyframes shineReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
             }
-            50% { 
-                transform: translateY(-15px) scale(1.01); 
-                box-shadow: 0 35px 100px rgba(255, 107, 157, 0.6),
-                           inset 0 0 80px rgba(255, 107, 157, 0.15);
+            20% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+                filter: brightness(1.5) drop-shadow(0 0 50px rgba(255, 215, 0, 1));
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+                visibility: hidden;
+            }
+        }
+
+        /* SSSR 彩虹文字 */
+        .sssr-badge {
+            display: inline-block;
+            font-size: 3.5rem;
+            font-weight: 900;
+            padding: 15px 35px;
+            border-radius: 20px;
+            background: linear-gradient(
+                90deg,
+                #ff0000,
+                #ff7f00,
+                #ffff00,
+                #00ff00,
+                #0000ff,
+                #4b0082,
+                #9400d3,
+                #ff0000
+            );
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowFlow 3s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+            letter-spacing: 8px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes rainbowFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .sssr-container {
+            margin: 25px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, 
+                rgba(255, 0, 0, 0.1),
+                rgba(255, 215, 0, 0.1),
+                rgba(0, 255, 0, 0.1),
+                rgba(0, 0, 255, 0.1));
+            border-radius: 25px;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: ssrGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes ssrGlow {
+            0%, 100% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(255, 215, 0, 1);
+            }
+        }
+
+        /* 图片容器 */
+        .image-container {
+            margin-bottom: 40px;
+            position: relative;
+            opacity: 0;
+            animation: imageZoom 1s ease 3.2s forwards;
+        }
+
+        @keyframes imageZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotateZ(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateZ(0deg);
             }
         }
 
         .surprise-image {
             width: 100%;
-            max-width: 450px;
-            border-radius: 25px;
-            margin-bottom: 35px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4),
-                        0 0 40px rgba(255, 107, 157, 0.3);
-            animation: imageZoom 1s ease-out, imageGlow 3s ease-in-out infinite;
-            border: 3px solid rgba(255, 107, 157, 0.5);
-            position: relative;
+            max-width: 500px;
+            height: auto;
+            border-radius: 30px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.2),
+                0 0 0 8px rgba(255, 215, 0, 0.2);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
-        @keyframes imageZoom {
-            from { transform: scale(0.5) rotate(-5deg); opacity: 0; }
-            to { transform: scale(1) rotate(0deg); opacity: 1; }
+        .surprise-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.3),
+                0 0 0 12px rgba(255, 215, 0, 0.4);
         }
 
-        @keyframes imageGlow {
-            0%, 100% { 
-                box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4),
-                           0 0 40px rgba(255, 107, 157, 0.3);
-            }
-            50% { 
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                           0 0 60px rgba(255, 107, 157, 0.6);
-            }
-        }
-
+        /* 文字 */
         .surprise-text {
-            font-size: 2rem;
-            color: #fff;
+            font-size: 1.5rem;
+            color: #333;
+            line-height: 2.2;
             margin-bottom: 35px;
-            line-height: 2;
-            font-weight: 500;
-            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
-            position: relative;
-            z-index: 1;
+            opacity: 0;
+            animation: textSlideIn 1.2s ease 3.5s forwards;
+        }
+
+        @keyframes textSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .surprise-text strong {
+            display: block;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b6b, #ff8c42, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+            text-shadow: 2px 2px 20px rgba(255, 107, 107, 0.3);
+            letter-spacing: 2px;
         }
 
         /* 按钮 */
         .collect-btn {
-            background: linear-gradient(135deg, #ff6b9d, #c471ed, #f64f59);
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, #ff6b6b, #ff8c42);
             color: white;
             border: none;
-            padding: 22px 60px;
+            padding: 22px 70px;
             font-size: 1.6rem;
-            font-weight: bold;
+            font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5),
-                        inset 0 -5px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Noto Sans SC', sans-serif;
-            letter-spacing: 3px;
+            box-shadow: 
+                0 15px 40px rgba(255, 107, 107, 0.4),
+                0 0 0 4px rgba(255, 255, 255, 0.8) inset;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            letter-spacing: 2px;
+            font-family: 'Poppins', 'Noto Sans SC', sans-serif;
             position: relative;
-            z-index: 1;
             overflow: hidden;
-            animation: gradientMove 3s ease infinite;
+            opacity: 0;
+            animation: buttonAppear 0.8s ease 4s forwards;
+        }
+
+        @keyframes buttonAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .collect-btn::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
 
         .collect-btn:hover::before {
-            left: 100%;
+            width: 300px;
+            height: 300px;
         }
 
         .collect-btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(255, 107, 157, 0.7),
-                        inset 0 -5px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 
+                0 25px 60px rgba(255, 107, 107, 0.6),
+                0 0 0 6px rgba(255, 255, 255, 1) inset;
         }
 
         .collect-btn:active {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.6);
+            transform: translateY(-2px) scale(1.02);
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 口味选择界面 */
-        .selection-title {
-            font-size: 3.3rem;
-            background: linear-gradient(135deg, #ff9ecf, #c8b7ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 35px;
-            font-weight: bold;
-            filter: drop-shadow(0 0 20px rgba(255, 158, 207, 0.6));
-            position: relative;
-            z-index: 1;
-        }
-
-        .flavor-selection {
+        /* 票券样式 */
+        .ticket-section {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
-            animation: fadeIn 0.8s ease-out;
+            animation: ticketAppear 0.8s ease;
         }
 
-        .flavor-options {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .flavor-option {
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .flavor-option:hover {
-            transform: translateY(-10px) scale(1.08);
-        }
-
-        .flavor-image {
-            width: 220px;
-            height: 220px;
-            border-radius: 25px;
-            border: 5px solid rgba(255, 107, 157, 0.4);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4),
-                        0 0 30px rgba(255, 107, 157, 0.3);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            object-fit: cover;
-        }
-
-        .flavor-option:hover .flavor-image {
-            border-color: #ff6b9d;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                        0 0 50px rgba(255, 107, 157, 0.7);
-            transform: scale(1.05);
-        }
-
-        .flavor-name {
-            font-size: 1.4rem;
-            color: #fff;
-            margin-top: 18px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
-            position: relative;
-            z-index: 1;
+        @keyframes ticketAppear {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
         }
 
         .ticket {
-            background: linear-gradient(135deg, #ffffff, #fff5f8);
+            background: white;
             border-radius: 25px;
             padding: 45px;
-            max-width: 550px;
-            margin: 0 auto 35px;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4),
-                        0 0 60px rgba(255, 107, 157, 0.3);
+            margin-bottom: 35px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.15),
+                0 0 0 2px rgba(255, 107, 107, 0.2);
+            border: 3px dashed rgba(255, 107, 107, 0.3);
             position: relative;
-            overflow: hidden;
-            border: 3px solid rgba(255, 107, 157, 0.3);
+        }
+
+        .ticket::before,
+        .ticket::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(-45deg, #ff6b6b, #ffd93d, #ff8c42, #ff6b9d);
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .ticket::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
-            animation: ticketGlow 4s ease-in-out infinite;
+            left: -15px;
         }
 
-        @keyframes ticketGlow {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
+        .ticket::after {
+            right: -15px;
         }
 
         .ticket-header {
-            border-bottom: 2px dashed rgba(255, 107, 157, 0.2);
+            margin-bottom: 35px;
             padding-bottom: 25px;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
+            border-bottom: 3px dashed rgba(255, 107, 107, 0.2);
         }
 
         .ticket-logo {
-            font-size: 3.5rem;
-            margin-bottom: 12px;
-            animation: logoSpin 3s ease-in-out infinite;
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            animation: logoSpin 2s ease infinite;
         }
 
         @keyframes logoSpin {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(360deg) scale(1.1); }
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(10deg) scale(1.1);
+            }
         }
 
         .ticket-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            background: linear-gradient(135deg, #ff6b9d, #c471ed);
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b6b, #ff8c42);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 8px;
-            filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
-        }
-
-        .ticket-subtitle {
-            color: #888;
-            font-size: 1.1rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        .ticket-body {
-            position: relative;
-            z-index: 1;
-        }
-
-        .ticket-info {
-            padding: 15px 0;
-        }
-
-        .ticket-label {
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .ticket-value {
-            color: #333;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .ticket-subtitle {
+            font-size: 1.1rem;
+            color: #999;
+            letter-spacing: 3px;
+            font-weight: 300;
         }
 
-        .selected-flavor-display {
-            font-size: 2.2rem;
-            color: #ff6b9d;
-            margin: 15px 0;
-            font-weight: 800;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        /* 票券显示 */
-        .ticket-section {
-            display: none;
-            animation: fadeIn 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .instruction-box {
-            font-size: 1.4rem;
-            color: #fff;
-            margin: 25px 0;
-            padding: 25px;
-            background: linear-gradient(135deg, 
-                rgba(255, 107, 157, 0.25), 
-                rgba(196, 113, 237, 0.25));
-            border-radius: 20px;
-            border: 2px solid rgba(255, 107, 157, 0.4);
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3),
-                        inset 0 0 30px rgba(255, 107, 157, 0.1);
-            text-shadow: 0 0 15px rgba(255, 107, 157, 0.5);
-            animation: instructionPulse 2s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-        }
-
-        @keyframes instructionPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3),
-                           inset 0 0 30px rgba(255, 107, 157, 0.1);
-            }
-            50% { 
-                transform: scale(1.02);
-                box-shadow: 0 15px 40px rgba(255, 107, 157, 0.5),
-                           inset 0 0 40px rgba(255, 107, 157, 0.15);
-            }
-        }
-
-        .download-btn {
-            background: linear-gradient(135deg, #4ade80, #22c55e, #16a34a);
-            background-size: 200% 200%;
-            color: white;
-            border: none;
-            padding: 18px 45px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 12px 35px rgba(74, 222, 128, 0.5),
-                        inset 0 -5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Noto Sans SC', sans-serif;
-            margin-top: 25px;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-            animation: greenGradient 3s ease infinite;
-        }
-
-        @keyframes greenGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .download-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .download-btn:hover::before {
-            left: 100%;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 18px 45px rgba(74, 222, 128, 0.7),
-                        inset 0 -5px 15px rgba(0, 0, 0, 0.2);
+        .ticket-body {
+            margin: 35px 0;
         }
 
         .ticket-item {
             display: flex;
             justify-content: space-between;
-            margin: 15px 0;
-            font-size: 1.1rem;
-            color: #333;
+            align-items: center;
+            padding: 18px 25px;
+            background: linear-gradient(135deg, 
+                rgba(255, 107, 107, 0.05), 
+                rgba(255, 140, 66, 0.05));
+            border-radius: 15px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .ticket-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
         }
 
         .ticket-label {
-            font-weight: bold;
+            font-weight: 600;
             color: #666;
+            font-size: 1.1rem;
         }
 
         .ticket-value {
-            color: #ff6b9d;
-            font-weight: bold;
+            font-weight: 700;
+            color: #ff6b6b;
+            font-size: 1.2rem;
         }
 
         .ticket-footer {
-            text-align: center;
-            border-top: 3px dashed #ff6b9d;
-            padding-top: 20px;
-            margin-top: 20px;
+            padding-top: 25px;
+            border-top: 3px dashed rgba(255, 107, 107, 0.2);
+        }
+
+        .ticket-footer p {
+            color: #999;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
         }
 
         .ticket-code {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding: 15px;
+            border: 3px solid rgba(255, 107, 107, 0.2);
+            border-radius: 15px;
+            display: inline-block;
+            margin: 15px 0;
             font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ff6b9d;
-            letter-spacing: 3px;
-            margin: 10px 0;
         }
 
         .ticket-note {
-            color: #999;
-            font-size: 0.9rem;
-            margin-top: 10px;
+            font-size: 1rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-top: 15px;
         }
 
+        .instruction {
+            background: linear-gradient(135deg, #fff5e6, #ffe6e6);
+            padding: 25px 35px;
+            border-radius: 20px;
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.15);
+            animation: pulse 2s ease infinite;
+            border: 2px solid rgba(255, 107, 107, 0.2);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.3);
+            transition: all 0.4s ease;
+            letter-spacing: 2px;
+            font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(76, 175, 80, 0.5);
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+        }
+
+        .download-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* 第二个惊喜 */
+        #surprise2View {
+            display: none;
+        }
+
+        .next-surprise-btn {
+            background: linear-gradient(135deg, #9b59b6, #e74c3c);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(155, 89, 182, 0.4);
+            transition: all 0.4s ease;
+            letter-spacing: 2px;
+            font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+            margin-top: 25px;
+        }
+
+        .next-surprise-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(155, 89, 182, 0.6);
+        }
+
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .title { font-size: 2.8rem; }
-            .subtitle { font-size: 1.1rem; }
-            
-            .surprise-card { 
-                padding: 30px 20px; 
-                width: 95vw;
-                max-width: 400px;
+            .title {
+                font-size: 3.5rem;
             }
-            
-            .surprise-image {
-                width: 250px;
-                height: 250px;
+
+            .subtitle {
+                font-size: 1.3rem;
+                letter-spacing: 4px;
             }
-            
-            .surprise-text { font-size: 1.3rem; }
-            
-            /* 口味选择 */
-            .selection-title { font-size: 2.22rem; }
-            .flavor-options { gap: 20px; }
-            .flavor-image { width: 140px; height: 140px; }
-            .flavor-name { font-size: 1rem; }
-            
-            /* 票券适配 */
+
+            .surprise-card {
+                padding: 40px 30px;
+                border-radius: 30px;
+            }
+
+            .surprise-text {
+                font-size: 1.3rem;
+            }
+
+            .surprise-text strong {
+                font-size: 2.2rem;
+            }
+
+            .collect-btn {
+                padding: 18px 50px;
+                font-size: 1.4rem;
+            }
+
             .ticket {
-                width: 95vw;
-                padding: 30px 20px;
+                padding: 35px 25px;
             }
-            
-            .ticket-header h2 { font-size: 1.8rem; }
-            .ticket-value { font-size: 1.4rem; }
-            .selected-flavor-display { font-size: 1.8rem; }
-            
-            .instruction-box {
+
+            .ticket-logo {
+                font-size: 3.5rem;
+            }
+
+            .ticket-title {
+                font-size: 2rem;
+            }
+
+            .instruction {
                 font-size: 1.1rem;
-                padding: 15px;
+                padding: 20px 25px;
             }
-            
+
             .download-btn {
-                padding: 15px 30px;
-                font-size: 1rem;
+                padding: 16px 45px;
+                font-size: 1.2rem;
             }
+
+            .floating-emoji {
+                font-size: 2rem;
+            }
+
+            .emoji-4 { font-size: 2.5rem; }
         }
 
         @media (max-width: 480px) {
-            .title { font-size: 2.2rem; }
-            
+            .title {
+                font-size: 2.8rem;
+                letter-spacing: 1px;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+                letter-spacing: 3px;
+                margin-bottom: 35px;
+            }
+
+            .surprise-card {
+                padding: 30px 20px;
+                border-radius: 25px;
+            }
+
             .surprise-image {
-                width: 200px;
-                height: 200px;
+                border-radius: 20px;
             }
 
-            .flavor-options {
-                gap: 15px;
+            .surprise-text {
+                font-size: 1.1rem;
+                line-height: 1.9;
             }
 
-            .flavor-image { 
-                width: 110px; 
-                height: 110px; 
+            .surprise-text strong {
+                font-size: 1.8rem;
+                margin: 15px 0;
             }
 
-            .flavor-name {
-                font-size: 0.9rem;
-            }
-            
-            .ticket-header h2 { font-size: 1.5rem; }
-            .ticket-value { font-size: 1.2rem; }
-            .ticket-code { font-size: 1.2rem; letter-spacing: 2px; }
-            
             .collect-btn {
-                padding: 12px 25px;
+                padding: 16px 40px;
+                font-size: 1.2rem;
+                letter-spacing: 1px;
+            }
+
+            .ticket {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            .ticket-logo {
+                font-size: 3rem;
+            }
+
+            .ticket-title {
+                font-size: 1.7rem;
+            }
+
+            .ticket-subtitle {
+                font-size: 0.95rem;
+                letter-spacing: 2px;
+            }
+
+            .ticket-item {
+                padding: 14px 18px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .ticket-label,
+            .ticket-value {
                 font-size: 1rem;
             }
 
-            .instruction-box {
-                font-size: 1rem;
+            .ticket-code {
+                font-size: 1.6rem;
+                letter-spacing: 4px;
+                padding: 12px;
             }
+
+            .instruction {
+                font-size: 1rem;
+                padding: 18px 20px;
+            }
+
+            .download-btn {
+                padding: 14px 35px;
+                font-size: 1.1rem;
+                width: 100%;
+            }
+
+            .floating-emoji {
+                font-size: 1.5rem;
+            }
+
+            .emoji-2 { font-size: 1.3rem; }
+            .emoji-4 { font-size: 2rem; }
+            .emoji-5 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
-    <!-- 星星背景 -->
-    <div class="stars" id="stars"></div>
+    <!-- 浮动装饰 -->
+    <div class="floating-emoji emoji-1">🍔</div>
+    <div class="floating-emoji emoji-2">🍟</div>
+    <div class="floating-emoji emoji-3">❤️</div>
+    <div class="floating-emoji emoji-4">🍔</div>
+    <div class="floating-emoji emoji-5">🎉</div>
+    <div class="floating-emoji emoji-6">💕</div>
 
     <div class="container">
         <h1 class="title">🎉 今日惊喜 🎉</h1>
         <p class="subtitle">你的专属惊喜已送达</p>
 
         <div class="surprise-card">
-            <!-- 初始显示 - Family Mart 冰淇淋 -->
+            <!-- 发光遮罩 -->
+            <div class="reveal-shine" id="revealShine">✨</div>
+            
+            <!-- 初始显示 - Ramly Burger -->
             <div id="initialView">
-                <img src="media/supprise i/family.png" alt="Family Mart 冰淇淋" class="surprise-image">
+                <div class="image-container">
+                    <img src="media/supprise i/ramly.jpg" alt="Homemade Ramly Burger" class="surprise-image">
+                </div>
                 <p class="surprise-text">
-                    🍦 今天的惊喜是<br>
-                    <strong style="color: #ff6b9d; font-size: 2.2rem;">Family Mart 冰淇淋</strong><br>
+                    🍔 今天的惊喜是<br>
+                    <strong>Homemade Ramly Burger</strong>
                     💕
                 </p>
-                <button class="collect-btn" onclick="showFlavorSelection()">🎁 立即领取 🎁</button>
-            </div>
-
-            <!-- 口味选择 -->
-            <div id="flavorView" class="flavor-selection">
-                <h2 class="selection-title">选择你喜欢的口味 🍦</h2>
-                <div class="flavor-options">
-                    <div class="flavor-option" onclick="selectFlavor('MATCHA', 'media/supprise i/1.png')">
-                        <img src="media/supprise i/1.png" alt="抹茶" class="flavor-image">
-                        <div class="flavor-name">🍵 MATCHA<br>抹茶</div>
-                    </div>
-                    <div class="flavor-option" onclick="selectFlavor('FRENCH VANILLA', 'media/supprise i/2.png')">
-                        <img src="media/supprise i/2.png" alt="法式香草" class="flavor-image">
-                        <div class="flavor-name">🌼 FRENCH VANILLA<br>法式香草</div>
-                    </div>
-                </div>
+                <button class="collect-btn" onclick="showTicket()">🎁 立即领取 🎁</button>
             </div>
 
             <!-- 票券显示 -->
             <div id="ticketView" class="ticket-section">
                 <div class="ticket">
                     <div class="ticket-header">
-                        <div class="ticket-logo">🍦</div>
+                        <div class="ticket-logo">🍔</div>
                         <h2 class="ticket-title">惊喜票券</h2>
-                        <p class="ticket-subtitle">Family Mart Ice Cream</p>
+                        <p class="ticket-subtitle">Homemade Ramly Burger</p>
                     </div>
                     
                     <div class="ticket-body">
                         <div class="ticket-item">
                             <span class="ticket-label">产品：</span>
-                            <span class="ticket-value">Family Mart 冰淇淋</span>
-                        </div>
-                        <div class="ticket-item">
-                            <span class="ticket-label">口味：</span>
-                            <span class="ticket-value" id="selectedFlavor">-</span>
+                            <span class="ticket-value">Homemade Ramly Burger</span>
                         </div>
                         <div class="ticket-item">
                             <span class="ticket-label">日期：</span>
@@ -698,10 +835,14 @@
                             <span class="ticket-label">数量：</span>
                             <span class="ticket-value">1 份</span>
                         </div>
+                        <div class="ticket-item">
+                            <span class="ticket-label">特色：</span>
+                            <span class="ticket-value">手工制作 ❤️</span>
+                        </div>
                     </div>
                     
                     <div class="ticket-footer">
-                        <p style="color: #666; margin-bottom: 10px;">票券编号</p>
+                        <p>票券编号</p>
                         <div class="ticket-code" id="ticketCode">LOVE2026</div>
                         <p class="ticket-note">此票券仅供收藏纪念 💕</p>
                     </div>
@@ -712,44 +853,127 @@
                 </div>
 
                 <button class="download-btn" onclick="downloadPDF()">📥 下载 PDF 票券</button>
+                <button class="next-surprise-btn" onclick="showSurprise2()">🎁 还有惊喜哦！ 🎁</button>
+            </div>
+
+            <!-- 第二个惊喜 - 打屁屁 -->
+            <div id="surprise2View">
+                <div class="reveal-shine" id="revealShine2">✨</div>
+                
+                <div id="surprise2Content" style="opacity: 0;">
+                    <div class="sssr-container">
+                        <div class="sssr-badge">SSSR 大奖</div>
+                    </div>
+                    
+                    <div class="image-container" style="animation: imageZoom 1s ease 3.2s forwards;">
+                        <img src="media/supprise i/ass.jpg" alt="Special Surprise" class="surprise-image">
+                    </div>
+                    
+                    <p class="surprise-text" style="animation: textSlideIn 1.2s ease 3.5s forwards;">
+                        🎯 恭喜获得<br>
+                        <strong style="background: linear-gradient(135deg, #ff0080, #ff8c00, #40e0d0); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">打屁屁特权</strong><br>
+                        <span style="font-size: 1.3rem; color: #ff6b6b;">（你给我打屁屁 🍑）</span><br>
+                        💕
+                    </p>
+                    
+                    <button class="collect-btn" onclick="showTicket2()" style="animation: buttonAppear 0.8s ease 4s forwards;">🎁 立即领取 🎁</button>
+                </div>
+            </div>
+
+            <!-- 第二个票券 -->
+            <div id="ticketView2" class="ticket-section">
+                <div class="ticket">
+                    <div class="ticket-header">
+                        <div class="ticket-logo">🎯</div>
+                        <h2 class="ticket-title">SSSR 大奖票券</h2>
+                        <p class="ticket-subtitle">Special Surprise Reward</p>
+                    </div>
+                    
+                    <div class="ticket-body">
+                        <div class="ticket-item">
+                            <span class="ticket-label">奖品：</span>
+                            <span class="ticket-value">打屁屁特权</span>
+                        </div>
+                        <div class="ticket-item">
+                            <span class="ticket-label">说明：</span>
+                            <span class="ticket-value" style="font-size: 1.1rem;">你给我打屁屁 🍑</span>
+                        </div>
+                        <div class="ticket-item">
+                            <span class="ticket-label">稀有度：</span>
+                            <span class="ticket-value" style="background: linear-gradient(90deg, #ff0000, #ffd700, #00ff00, #0000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SSSR ⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <div class="ticket-item">
+                            <span class="ticket-label">日期：</span>
+                            <span class="ticket-value" id="ticketDate2">-</span>
+                        </div>
+                        <div class="ticket-item">
+                            <span class="ticket-label">有效期：</span>
+                            <span class="ticket-value">永久有效 ♾️</span>
+                        </div>
+                    </div>
+                    
+                    <div class="ticket-footer">
+                        <p>票券编号</p>
+                        <div class="ticket-code" id="ticketCode2">LOVE2026</div>
+                        <p class="ticket-note">此票券为限定奖励 💕</p>
+                    </div>
+                </div>
+
+                <div class="instruction">
+                    💌 恭喜你抽到SSSR大奖！请截图保存~ 💌
+                </div>
+
+                <button class="download-btn" onclick="downloadPDF2()">📥 下载 SSSR 票券</button>
             </div>
         </div>
     </div>
 
     <script>
-        let selectedFlavorName = '';
-        let selectedFlavorImage = '';
+        // 页面加载后移除发光遮罩
+        setTimeout(() => {
+            const revealShine = document.getElementById('revealShine');
+            if (revealShine) {
+                revealShine.remove();
+            }
+        }, 3000);
 
-        // 创建星星
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 150; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                starsContainer.appendChild(star);
+        // 播放SSR音效
+        function playSSRSound() {
+            try {
+                const audio = new Audio('media/win.mp3');
+                audio.volume = 0.6;
+                audio.play().catch(e => console.log('Audio playback failed:', e));
+            } catch (e) {
+                console.log('Audio playback failed:', e);
             }
         }
 
-        // 显示口味选择
-        function showFlavorSelection() {
-            document.getElementById('initialView').style.display = 'none';
-            document.getElementById('flavorView').style.display = 'flex';
+        // 显示第二个惊喜
+        function showSurprise2() {
+            document.getElementById('ticketView').style.display = 'none';
+            document.getElementById('surprise2View').style.display = 'block';
+            
+            // 播放音效
+            playSSRSound();
+            
+            // 显示内容
+            setTimeout(() => {
+                document.getElementById('surprise2Content').style.opacity = '1';
+            }, 100);
+            
+            // 移除第二个发光遮罩
+            setTimeout(() => {
+                const revealShine2 = document.getElementById('revealShine2');
+                if (revealShine2) {
+                    revealShine2.remove();
+                }
+            }, 3000);
         }
 
-        // 选择口味
-        function selectFlavor(flavor, imagePath) {
-            selectedFlavorName = flavor;
-            selectedFlavorImage = imagePath;
-            
-            // 显示票券
-            document.getElementById('flavorView').style.display = 'none';
+        // 显示第一个票券
+        function showTicket() {
+            document.getElementById('initialView').style.display = 'none';
             document.getElementById('ticketView').style.display = 'block';
-            
-            // 更新票券信息
-            document.getElementById('selectedFlavor').textContent = flavor;
             
             // 设置日期
             const today = new Date();
@@ -759,7 +983,7 @@
             document.getElementById('ticketDate').textContent = dateStr;
             
             // 生成随机票券编号
-            const code = 'FM' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            const code = 'RB' + Math.random().toString(36).substr(2, 8).toUpperCase();
             document.getElementById('ticketCode').textContent = code;
         }
 
@@ -772,24 +996,24 @@
             doc.setFont("helvetica");
             
             // 添加边框
-            doc.setDrawColor(255, 107, 157);
+            doc.setDrawColor(255, 107, 107);
             doc.setLineWidth(2);
             doc.roundedRect(10, 10, 190, 277, 5, 5);
             
             // 添加内容
             doc.setFontSize(30);
-            doc.setTextColor(255, 107, 157);
-            doc.text('🍦', 95, 40, { align: 'center' });
+            doc.setTextColor(255, 107, 107);
+            doc.text('🍔', 95, 40, { align: 'center' });
             
             doc.setFontSize(24);
             doc.text('Surprise Ticket', 105, 60, { align: 'center' });
             
             doc.setFontSize(16);
             doc.setTextColor(102, 102, 102);
-            doc.text('Family Mart Ice Cream', 105, 75, { align: 'center' });
+            doc.text('Homemade Ramly Burger', 105, 75, { align: 'center' });
             
             // 分隔线
-            doc.setDrawColor(255, 107, 157);
+            doc.setDrawColor(255, 107, 107);
             doc.setLineDash([5, 5]);
             doc.line(20, 90, 190, 90);
             doc.setLineDash([]);
@@ -808,30 +1032,30 @@
             
             doc.setTextColor(102, 102, 102);
             doc.text('Product:', 30, yPos);
-            doc.setTextColor(255, 107, 157);
-            doc.text('Family Mart Ice Cream', 120, yPos, { align: 'right' });
-            
-            yPos += lineHeight;
-            doc.setTextColor(102, 102, 102);
-            doc.text('Flavor:', 30, yPos);
-            doc.setTextColor(255, 107, 157);
-            doc.text(selectedFlavorName, 120, yPos, { align: 'right' });
+            doc.setTextColor(255, 107, 107);
+            doc.text('Homemade Ramly Burger', 180, yPos, { align: 'right' });
             
             yPos += lineHeight;
             doc.setTextColor(102, 102, 102);
             doc.text('Date:', 30, yPos);
-            doc.setTextColor(255, 107, 157);
-            doc.text(dateStr, 120, yPos, { align: 'right' });
+            doc.setTextColor(255, 107, 107);
+            doc.text(dateStr, 180, yPos, { align: 'right' });
             
             yPos += lineHeight;
             doc.setTextColor(102, 102, 102);
             doc.text('Quantity:', 30, yPos);
-            doc.setTextColor(255, 107, 157);
-            doc.text('1', 120, yPos, { align: 'right' });
+            doc.setTextColor(255, 107, 107);
+            doc.text('1', 180, yPos, { align: 'right' });
+            
+            yPos += lineHeight;
+            doc.setTextColor(102, 102, 102);
+            doc.text('Special:', 30, yPos);
+            doc.setTextColor(255, 107, 107);
+            doc.text('Handmade with Love', 180, yPos, { align: 'right' });
             
             // 分隔线
             yPos += 20;
-            doc.setDrawColor(255, 107, 157);
+            doc.setDrawColor(255, 107, 107);
             doc.setLineDash([5, 5]);
             doc.line(20, yPos, 190, yPos);
             doc.setLineDash([]);
@@ -844,7 +1068,7 @@
             
             yPos += 10;
             doc.setFontSize(18);
-            doc.setTextColor(255, 107, 157);
+            doc.setTextColor(255, 107, 107);
             const ticketCode = document.getElementById('ticketCode').textContent;
             doc.text(ticketCode, 105, yPos, { align: 'center' });
             
@@ -858,17 +1082,144 @@
             doc.text('Please send this to me :)', 105, yPos, { align: 'center' });
             
             // 装饰
-            doc.setTextColor(255, 107, 157);
+            doc.setTextColor(255, 107, 107);
             doc.setFontSize(20);
             doc.text('💕', 30, 250);
-            doc.text('💕', 180, 250);
+            doc.text('🍔', 105, 250, { align: 'center' });
+            doc.text('💕', 180, 250, { align: 'right' });
             
             // 保存PDF
-            doc.save('FamilyMart_IceCream_Ticket.pdf');
+            doc.save('Ramly_Burger_Ticket.pdf');
         }
 
-        // 初始化
-        createStars();
+        // 显示第二个票券
+        function showTicket2() {
+            document.getElementById('surprise2Content').style.display = 'none';
+            document.getElementById('ticketView2').style.display = 'block';
+            
+            // 设置日期
+            const today = new Date();
+            const dateStr = today.getFullYear() + '年' + 
+                          (today.getMonth() + 1) + '月' + 
+                          today.getDate() + '日';
+            document.getElementById('ticketDate2').textContent = dateStr;
+            
+            // 生成随机票券编号
+            const code = 'SSR' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            document.getElementById('ticketCode2').textContent = code;
+        }
+
+        // 下载第二个PDF
+        function downloadPDF2() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // 设置字体
+            doc.setFont("helvetica");
+            
+            // 添加彩虹边框
+            doc.setDrawColor(255, 0, 0);
+            doc.setLineWidth(3);
+            doc.roundedRect(10, 10, 190, 277, 5, 5);
+            
+            // 添加内容
+            doc.setFontSize(30);
+            doc.setTextColor(255, 215, 0);
+            doc.text('🎯', 95, 40, { align: 'center' });
+            
+            doc.setFontSize(28);
+            doc.setTextColor(255, 0, 0);
+            doc.text('SSSR TICKET', 105, 60, { align: 'center' });
+            
+            doc.setFontSize(16);
+            doc.setTextColor(255, 140, 0);
+            doc.text('Super Special Surprise Reward', 105, 75, { align: 'center' });
+            
+            // 分隔线
+            doc.setDrawColor(255, 215, 0);
+            doc.setLineDash([5, 5]);
+            doc.line(20, 90, 190, 90);
+            doc.setLineDash([]);
+            
+            // 票券信息
+            doc.setFontSize(14);
+            doc.setTextColor(0, 0, 0);
+            
+            const today = new Date();
+            const dateStr = today.getFullYear() + '-' + 
+                          String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                          String(today.getDate()).padStart(2, '0');
+            
+            let yPos = 110;
+            const lineHeight = 15;
+            
+            doc.setTextColor(102, 102, 102);
+            doc.text('Reward:', 30, yPos);
+            doc.setTextColor(255, 0, 0);
+            doc.text('Special Privilege', 180, yPos, { align: 'right' });
+            
+            yPos += lineHeight;
+            doc.setTextColor(102, 102, 102);
+            doc.text('Description:', 30, yPos);
+            doc.setTextColor(255, 107, 107);
+            doc.text('You spank me', 180, yPos, { align: 'right' });
+            
+            yPos += lineHeight;
+            doc.setTextColor(102, 102, 102);
+            doc.text('Rarity:', 30, yPos);
+            doc.setTextColor(255, 215, 0);
+            doc.text('SSSR (5 Stars)', 180, yPos, { align: 'right' });
+            
+            yPos += lineHeight;
+            doc.setTextColor(102, 102, 102);
+            doc.text('Date:', 30, yPos);
+            doc.setTextColor(255, 0, 0);
+            doc.text(dateStr, 180, yPos, { align: 'right' });
+            
+            yPos += lineHeight;
+            doc.setTextColor(102, 102, 102);
+            doc.text('Validity:', 30, yPos);
+            doc.setTextColor(255, 0, 0);
+            doc.text('Forever', 180, yPos, { align: 'right' });
+            
+            // 分隔线
+            yPos += 20;
+            doc.setDrawColor(255, 215, 0);
+            doc.setLineDash([5, 5]);
+            doc.line(20, yPos, 190, yPos);
+            doc.setLineDash([]);
+            
+            // 票券编号
+            yPos += 20;
+            doc.setFontSize(12);
+            doc.setTextColor(102, 102, 102);
+            doc.text('Ticket Code', 105, yPos, { align: 'center' });
+            
+            yPos += 10;
+            doc.setFontSize(18);
+            doc.setTextColor(255, 0, 0);
+            const ticketCode = document.getElementById('ticketCode2').textContent;
+            doc.text(ticketCode, 105, yPos, { align: 'center' });
+            
+            // 底部说明
+            yPos += 20;
+            doc.setFontSize(10);
+            doc.setTextColor(153, 153, 153);
+            doc.text('Congratulations on winning the SSSR prize!', 105, yPos, { align: 'center' });
+            
+            yPos += 8;
+            doc.text('This is a limited reward ticket', 105, yPos, { align: 'center' });
+            
+            // 装饰
+            doc.setTextColor(255, 0, 0);
+            doc.setFontSize(20);
+            doc.text('⭐', 30, 250);
+            doc.text('🎯', 105, 250, { align: 'center' });
+            doc.text('⭐', 180, 250, { align: 'right' });
+            
+            // 保存PDF
+            doc.save('SSSR_Special_Ticket.pdf');
+        }
     </script>
 </body>
 </html>
